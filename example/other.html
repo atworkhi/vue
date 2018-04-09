@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>其他指令</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>v-pre&v-cloak&v-once</h1>
+    <hr>
+    <div id="app">
+
+        v-pre:<div v-pre>{{msg}}</div>
+        <div v-cloak>渲染完成后，才显示！</div>
+        <div><input type="text" v-model="msg"></div>
+        <div>{{msg}}</div>
+        v-once:<div v-once>{{msg}}</div>
+    </div>
+    <script type="text/javascript">  
+        var app = new Vue({
+            el:"#app",
+            data:{
+                msg:"hello",
+            }
+        });
+    </script>
+</body>
+</html>
