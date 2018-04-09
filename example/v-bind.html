@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-bind实例</title>
+</head>
+<body>
+    <h1>v-bind</h1>
+    <hr>
+    <div id="app">
+        v-bind绑定src地址<br>
+        <img v-bind:src="imgSrc"/>
+        <hr>
+        v-bind绑定 href
+        <br>
+        <a :href="webUrl" target="_blank">百度</a>
+        <hr>
+        v-bind绑定css:class
+        <br>
+        <div :class="className">结果1</div>
+        <br>
+        <div>
+            <input type="checkbox" id="c1" v-model="isok">
+            <label for="c1">result={{isok}}</label>
+        </div>
+        <div :class="{classA:isok}">判断是正确绿的 错误黑色 点击复选框</div>
+        <div :class="[c1,c2]">class以数组模式绑定</div>
+        <div :class="isok?c1:c2">class三元运算符点击上面复选框</div>
+        <div :style="styleObject">绑定style对象</div>
+    </div>
+    <style>
+        .classA{
+            color: green;
+        }
+        .classB{
+            font-size: 25px;
+        }
+    </style>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                imgSrc:"../assets/img/hanxx.png",
+                webUrl:"http://www.baidu.com",
+                className:'classA',
+                c1:'classA',
+                c2:'classB',
+                isok:true,
+                styleObject:{
+                    color:'red',
+                    fontSize:'24px'
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

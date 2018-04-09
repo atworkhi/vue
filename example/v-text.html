@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-text&v-html</title>
+</head>
+<body>
+    <h1>v-text&v-html 实例</h1>
+    <hr>
+    <div id="app">
+        <span>{{message}}</span>
+        <hr>
+        v-text="" 要显示的内容
+        <br>
+        <span v-text="message"></span>
+        <hr>
+        v-text=""
+        <br>
+        <span v-text="htmlmsg"></span>
+        <hr>
+        v-html=""
+        <br>
+        <span v-html="htmlmsg"></span>
+    </div>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                message:'hello world!!!',
+                htmlmsg:'<h2>我是带html标签的<h2>'
+            }
+        })
+    </script>
+    
+</body>
+</html>

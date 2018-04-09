@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>V-ON</title>
+</head>
+<body>
+    <h1>v-on实例</h1>
+    <hr>
+    <div id="app">
+        <!-- 显示内容用{{}} -->
+        <p>红队比赛得分：{{red}} </p>
+        <p>
+            <button v-on:click="reds">红队得分</button>
+            <br>
+            <!-- 用数据源，并用parseInt把字符串转换为int -->
+            enter键 触发加分
+            <br>
+            <input type="text" v-on:keyup.enter="onEnterRed" v-model="red2">
+        </p>
+        <p>蓝队比赛得分：{{green}} </p>
+        <p>
+            <button v-on:click="greens">蓝队得分</button>
+            <br>
+            <!-- 用数据源，并用parseInt把字符串转换为int -->
+            enter键 触发加分
+            <br>
+            <input type="text" v-on:keyup.enter="onEnterGreen" v-model="green2">
+        </p>
+    </div>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                red:0,
+                red2:1,
+                green:0,
+                green2:1
+            },
+            //自定义函数
+            methods:{
+                reds:function(){
+                    this.red++;
+                },
+                greens:function(){
+                    this.green++;
+                },
+                onEnterRed:function(){
+                    this.red=this.red + parseInt(this.red2);
+                },
+                onEnterGreen:function(){
+                    this.green=this.green+parseInt(this.green2);
+                }
+                
+            }
+        })
+    </script>
+    
+</body>
+</html>

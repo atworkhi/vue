@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>V-FOR</title>
+</head>
+<body>
+    <h1>v-for实例</h1>
+    循环输入数组
+    <hr>
+    <div id="app">
+       <ul>
+            <!-- 循环输出 -->
+            <li v-for="item in items">
+                    {{item}}
+            </li>
+       </ul>
+       <hr>
+       循环出对象 (index为下标)
+       <ul>
+           <li v-for="(student,index) in newStudents">
+               {{index+1}}：{{student.name}}-{{student.age}}-{{student.sex}}
+           </li>
+       </ul>
+    </div>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                items:[32,13,67,2,16,50,20,1],
+                students:[
+                    {name:"小王",age:60,sex:"男"},
+                    {name:"小李",age:30,sex:"女"},
+                    {name:"小张",age:40,sex:"女"}
+                ]  
+            },
+            //排序
+            computed:{
+                newItems:function(){
+                    return this.items.sort(sortNum);
+                },
+                newStudents:function(){
+                    return sortByKey(this.students,'age');
+                }
+            }
+        });
+        //自定义排序
+        function sortNum(a,b){
+            return a-b;
+        }
+        //对象排序
+        function sortByKey(array,key){
+            return array.sort(function(a,b){
+                var x=a[key];
+                var y=b[key];
+                return((x<y)?-1:((x>y)?1:0));
+            });
+        }
+    </script>
+    
+</body>
+</html>

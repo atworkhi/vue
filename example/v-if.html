@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>VIF VELSE VSHOW</title>
+</head>
+<body>
+    <h1>v-if&v-else&v-show</h1>
+    <h2>验证是否登陆与是否显示</h2>
+    <hr>
+    <div id="app">
+        <div v-if="isLoginin">
+            我是登陆的
+        </div>
+        <div v-if="noLogin">
+            我是未登陆的
+        </div>
+        <div v-else>请登陆未登陆的账户</div>
+
+        <div v-show="noshow">v-show是否显示</div>
+    </div>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                isLoginin:true,
+                noLogin:false,
+                noshow:false
+            }
+        })
+    </script>
+    
+</body>
+</html>
