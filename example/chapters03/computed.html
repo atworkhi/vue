@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>HelloWorld</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <hr>
+    <div id="app">
+        {{newPrice}}
+        <hr>
+        <ul>
+            <li v-for="item in resultNew">{{item}}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var newsList=[
+            {title:'河南新闻',date:'2017/12/12'},
+            {title:'北京新闻',date:'2017/12/10'},
+            {title:'上海新闻',date:'2018/04/04'},
+            {title:'武汉新闻',date:'2018/12/12'},
+        ]
+        var app=new Vue({  
+            el:'#app',
+            data:{
+                price:100,
+                newsList:newsList
+            },
+            computed:{
+                newPrice:function(){
+                    return this.price="￥"+this.price+"元";
+                },
+                resultNew:function(){
+                    return this.newsList.reverse(); //对数组元素进行翻转
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>

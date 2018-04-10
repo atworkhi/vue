@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>extends拓展选项</title>
+</head>
+<body>
+    <h1>extends拓展选项</h1>
+    <hr>
+    <div id="app">
+        result:{{num}}
+
+        <p><button @click="add()">点击</button></p>
+    </div>
+    <script type="text/javascript">
+        var extendsObj={
+            updated:function(){     //声明周期更新后
+                console.log("我是扩展的方法==>> result:"+this.num);
+            }
+        };
+        var app=new Vue({
+            el:'#app',
+            data:{
+               num:11,
+            },
+            methods:{
+                add:function(){
+                    this.num+=2;
+                    console.log("我是原生的方法==>> result:"+this.num);
+                },
+            },
+            updated:function(){
+                console.log("我是原生的update");
+            },
+            extends:extendsObj  //引入拓展extends
+        })
+    </script>
+    
+</body>
+</html>

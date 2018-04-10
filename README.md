@@ -228,3 +228,94 @@ component标签：
                 },
             },
 ```
+### 三、构造器选项：
+propsData传值
+```
+<header></header>
+var header_a=Vue.extend({
+            template:`<p>{{msg}}---我是propsData传的值：{{a}}</p>`,
+            data:function(){
+                return{
+                    msg:'Hello ,i m return header!',
+                }
+            },
+            props:['a'],
+        });
+        
+//绑定
+new header_a({propsData:{a:111}}).$mount('header');
+```
+computed格式化输出
+```
+data:{
+                price:100,
+            },
+computed:{
+        newPrice:function(){
+        return this.price="￥"+this.price+"元";
+        },}
+
+<li v-for="item in resultNew">{{item}}</li>
+ var newsList=[
+            {title:'河南新闻',date:'2017/12/12'},
+            {title:'北京新闻',date:'2017/12/10'},
+            {title:'上海新闻',date:'2018/04/04'},
+            {title:'武汉新闻',date:'2018/12/12'},
+        ]
+data:{
+    newsList:newsList
+}
+computed:{
+     resultNew:function(){
+                    return this.newsList.reverse(); //对数组元素进行翻转
+            }    
+}
+```
+methods方法选项
+
+watch数据监控
+```
+        <p>今日温度:{{hot}}</p>
+        <p>穿衣建议:{{opt}}</p>
+        <button @click="up(3)">提升温度</button>
+        <button @click="down(3)">降低温度</button>
+
+        var shirt=["羽绒服","毛衣","短袖"];
+        var app=new Vue({
+            el:'#app',
+            data:{
+               hot:14,
+               opt:"毛衣"
+            },
+            methods:{
+                up:function(x){
+                    this.hot+=x;
+                },
+                down:function(x){
+                    this.hot-=x;
+                }
+            },
+            watch:{
+                hot:function(newVal,oldVal){    //监控的数据
+                    if(newVal >=26){
+                        this.opt=shirt[2];
+                    }else if(newVal<26 && newVal >10){
+                        this.opt=shirt[1];
+                    }else{
+                        this.opt=shirt[0];
+                    }
+                }
+            }
+        });
+        //app.$watch("hot",function(newVal,oldVal){}); //也可以
+```
+Mixins混入选项
+
+extends拓展选项
+
+注意：如果插值形式从 {{}} ==> ${}
+需要加入属性： delimiters:['${','}']
+
+
+
+

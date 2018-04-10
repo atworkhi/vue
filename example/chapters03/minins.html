@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>mixins 混入</title>
+</head>
+<body>
+    <h1>mixins 混入</h1>
+    <hr>
+    <div id="app">
+        result:{{num}}
+        <p><button @click="add()">点击</button></p>
+    </div>
+    <script type="text/javascript">
+        var addConsole={
+            updated:function(){     //生命周期 数据发生变化打印
+                console.log("result:"+this.num);
+            }         
+        };
+        var app=new Vue({
+            el:'#app',
+            data:{
+               num:10,
+            },
+            methods:{
+                add:function(){
+                    this.num++;
+                },
+            },
+            mixins:[addConsole],    //使用混入插入效果
+        })
+    </script>
+    
+</body>
+</html>

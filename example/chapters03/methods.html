@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>HelloWorld</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <hr>
+    <div id="app">
+        result:{{num}}
+        <button v-on:click="add(2,$event)">有参数传值</button>
+    </div>
+    <button onclick="app.add(3)">外部按钮调用+3</button>
+    <script type="text/javascript">
+        var app=new Vue({
+            el:'#app',
+            data:{
+                num:2
+            },
+            methods:{
+                add:function(x,event){
+                    console.log(event);
+                    if(x!=''){
+                        this.num=this.num+x;
+                    }else{
+                        this.num=this.num++;
+                    }
+                },
+            }
+        })
+    </script>
+    
+</body>
+</html>

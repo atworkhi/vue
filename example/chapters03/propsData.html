@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>propsData 选项</title>
+</head>
+<body>
+    <h1>ropsData 选项</h1>
+    <hr>
+    <header></header>
+
+    <script type="text/javascript">
+        var header_a=Vue.extend({
+            template:`<p>{{msg}}---我是propsData传的值：{{a}}</p>`,
+            data:function(){
+                return{
+                    msg:'Hello ,i m return header!',
+                }
+            },
+            props:['a'],
+        });
+        
+        //绑定
+        new header_a({propsData:{a:111}}).$mount('header');
+    </script>
+    
+</body>
+</html>
