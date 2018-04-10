@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>自定义指令</title>
+</head>
+<body>
+    <h1>vue.directive</h1>
+    <hr>
+    <div id="app">
+        <div v-han="color">{{num}}</div>
+        <p><button @click="add">加法</button></p>
+        <p><button onclick="unbind()">解绑</button></p>
+
+        <div v-bindfun="color">{{text}}</div>
+        <input v-model="text">
+    </div>
+    <script type="text/javascript">
+        //解绑
+        function unbind(){
+            app.$destroy();
+        }
+        //定义函数(上方div中的 v-han)
+        Vue.directive("han",function(el,binding){
+            console.log(el);
+            console.log(binding);
+            console.log(binding.name);
+            el.style="color:"+binding.value;
+            
+        });
+        //声明周期
+        Vue.directive("bindfun",{
+            //被绑定
+            bind:function(){
+                console.log('1-bind');
+            },
+            //绑定到节点
+            inserted:function(){
+                console.log('2-inserted');
+            },
+            //组件更新
+            update:function(){
+                console.log('3-update');
+            },
+            //组件更新完成
+            componentUpdate:function(){
+                console.log('4-componentUpdate');
+            },
+            //解绑
+            unbind:function(){
+                console.log('5-unbind');
+            }
+        })
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                num:10,
+                color:"red",
+                text:"测试绑定、更新",
+            },
+            methods:{
+                add:function(){
+                    this.num++
+                },
+            }
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>模版制作</title>
+</head>
+<body>
+    <h1>template 模版制作</h1>
+    <hr>
+    <div id="app">
+        <!-- 显示内容用{{}} -->
+        {{message}}
+        
+    </div>
+
+    <template id="t1">
+        <h2 style="color: red">我是template标签模版</h2>
+    </template>
+    <script type="x-template" id="t2">
+        <h2 style="color: red">我是script标签模版</h2>
+    </script>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                message:'hello world!!!'
+            },
+            //用符号``创建模版
+            // template:`
+            //     <h2 style='color:red'>我是模版</h2>
+            // `
+            template:"#t2",
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>自定义组件</title>
+</head>
+<body>
+    <h1>component 自定义组件</h1>
+    <hr>
+    <div id="app">
+        
+       <hanxx></hanxx>
+       <hr>
+       <mydiv></mydiv>
+       <hr>
+       插值绑定
+       <br>
+       <mybind v-bind:num="msg"></mybind>
+       <hr>
+       父子组件：父组件中申请子组件
+       <br>
+       <father></father>
+       <hr>
+       component标签：
+       <br>
+       <component v-bind:is="who"></component>
+       <button v-on:click="change">点击测试</button>
+    </div>
+
+    <script type="text/javascript">
+        //定义component模版
+       var componentAA={
+           template:`
+           <p style='color:red'>我是componentAA</p>
+           `
+       }
+        var componentBB={
+           template:`
+           <p style='color:yellow'>我是componentBB</p>
+           `
+       }
+       var componentCC={
+           template:`
+           <p style='color:green'>我是componentCC</p>
+           `
+       }
+        //先定义子组件
+        var chindName = {
+            template:`
+            <p style='color:red'>我是一个子组件</p>
+            `
+        }
+        //定义父组件
+        var fatherName = {
+            template:`
+                <div>
+                    <p>我是父组件</p>
+                    <chind></chind>
+                </div>
+            `,
+            //在父组件中注册子组件
+            components:{
+                "chind":chindName,
+            }
+        }
+        //全局自定义组件
+        Vue.component('hanxx',{
+            template:`
+                <h2 style='color:red'>我是全局自定义组件</h2>
+            `
+        })
+        var app=new Vue({
+            el:'#app',
+            data:{
+                msg:20,
+                who: "componentAA"
+            },
+            components:{
+               'mydiv':{
+                template:`
+                    <div style='color:green'>我是局部自定义组件</div>`
+                },
+                'mybind':{
+                    template:`<p style='color:yellow'>我是插入的一个数值：{{num}}</p> `,
+                    props:['num'],
+                
+                },
+                "father":fatherName,
+
+                "componentAA":componentAA,
+
+                "componentBB":componentBB,
+
+                "componentCC":componentCC,
+            },
+            methods:{
+                change:function(){
+                    if(this.who=="componentAA"){
+                        this.who="componentBB";
+                    }else if(this.who=="componentBB"){
+                       this.who="componentCC";
+                    }else{
+                        this.who="componentAA";
+                    }
+                },
+            },
+        })     
+    </script> 
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>vue.set全局操作</title>
+</head>
+<body>
+    <h1>vue.set全局操作</h1>
+    <hr>
+    <!-- <div id="app">
+        {{goods}}:{{count}}
+    </div> -->
+    <div id="app">
+        <ul>
+            <li v-for="item in a">{{item}}</li>
+        </ul>
+    </div>
+    <!-- 外部按钮 -->
+    <button onclick="add()">增加数量</button>
+    <script type="text/javascript">
+        function add(){
+            //用set绑定
+            //Vue.set(outData,'count',5);
+            //app.count++;
+            //原生方法
+            //outData.count++; 
+            //用vue.set改变下标的值
+            Vue.set(app.a,1,'rrrrrr');
+
+        }
+        //外部变量
+        var outData={
+            // count:3,
+            // goods:'汽车'
+            a:['aaa','bbb','ccc'],
+        };
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:outData
+        })
+    </script>
+    
+</body>
+</html>
