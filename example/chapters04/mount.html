@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>实例二</title>
+</head>
+<body>
+    <h1>$mount</h1>
+    <hr>
+    <div id="app"> 
+    </div>
+    <button onclick="destroy()">卸载</button>
+    <button onclick="reload()">更新</button>
+    <button onclick="tick()">修改</button>
+    <script type="text/javascript">
+        var han = Vue.extend({
+            template:`<p>{{msg}}</p>`,
+            data:function(){
+                return {
+                    msg:"hello 小星星！！！"
+                }
+            },
+            mounted:function(){     //在构造器也能创建生命周期
+                console.log("创建挂载！！！");
+            },
+            destroyed:function(){
+                console.log("卸载了！！！！");
+            },
+            updated:function(){
+                console.log("更新了！！！");
+            },
+        });
+        //进行挂载到 div =app
+        var vm = new han().$mount("#app");
+        function destroy(){
+            vm.$destroy(); //卸载销毁
+        };
+        function reload(){
+            vm.$forceUpdate();  //更新
+        };
+        function tick(){
+            vm.msg="我是修改后的数据";
+            vm.$nextTick(function(){
+                console.log('数据修改完成');
+            });
+        };  
+    </script> 
+</body>
+</html>

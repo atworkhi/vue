@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <!-- jquery-3 -->
+    <script type="text/javascript" src="../../assets/js/jquery-3.3.1.min.js"></script>
+    <title>实例一</title>
+</head>
+<body>
+    <h1>实例一</h1>
+    <hr>
+    <div id="app">
+        <!-- 显示内容用{{}} -->
+        {{message}}
+    </div>
+    <script type="text/javascript">
+        // 初始化vue实例
+        var app=new Vue({
+            // 需与前面div名称一样
+            el:'#app',
+            // 显示数据
+            data:{
+                message:'hello world!!!'
+            },
+            mounted:function(){ //声明周期 在挂载的时候都引用jequery
+                $("#app").html("我是Vue引入的Jquery@@@");
+            }
+        })
+    </script>
+    
+</body>
+</html>

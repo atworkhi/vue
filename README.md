@@ -315,7 +315,164 @@ extends拓展选项
 
 注意：如果插值形式从 {{}} ==> ${}
 需要加入属性： delimiters:['${','}']
-
+### 四、内置组件与实例
+slot传值：
+```
+<body>
+    <h1>slot</h1>
+    <hr>
+    <div id="app">
+        <hanxx> 
+            <span slot="name">{{hanxxData.name}}</span>
+            <span slot="age">{{hanxxData.age}}</span>
+            <span slot="sex">{{hanxxData.sex}}</span>
+            <span slot="skill">{{hanxxData.skill}}</span>
+        </hanxx>
+    </div>
+    <template id="tep">
+        <div>
+                <p>姓名：<slot name="name"></slot></p>
+                <p>年龄：<slot name="age"></slot></slot></p>
+                <p>性别：<slot name="sex"></slot></slot></p>
+                <p>职业：<slot name="skill"></slot></slot></p>
+        </div>
+    </template>
+    <script type="text/javascript">
+        var hanxx={
+            template:"#tep"
+        };
+        var app=new Vue({
+            el:'#app',
+            data:{
+                hanxxData:{
+                    name:"韩小星星",
+                    age:27,
+                    sex:"男",
+                    skill:"IT"
+                },
+            },
+            components:{
+                "hanxx":hanxx,
+            }
+        })
+    </script>
+</body>
+```
+引入jquery.js
+```
+<!-- jquery-3 -->
+<script type="text/javascript" src="../../assets/js/jquery-3.3.1.min.js"></script>
+<div id="app">
+        <!-- 引入jquery,更改其显示内容 -->
+        {{message}}
+    </div>
+<script type="text/javascript">
+        var app=new Vue({
+            el:'#app',
+            data:{
+                message:'hello world!!!'
+            },
+            mounted:function(){ //声明周期 在挂载的时候都引用jequery
+                $("#app").html("我是Vue引入的Jquery@@@");
+            }
+        })
+    </script>
+```
+$mount挂载方法 $destroy 卸载销毁 $forceUpdate更新 $nextTick 修改
+```
+<body>
+    <h1>$mount</h1>
+    <hr>
+    <div id="app"> 
+    </div>
+    <button onclick="destroy()">卸载</button>
+    <button onclick="reload()">更新</button>
+    <button onclick="tick()">修改</button>
+    <script type="text/javascript">
+        var han = Vue.extend({
+            template:`<p>{{msg}}</p>`,
+            data:function(){
+                return {
+                    msg:"hello 小星星！！！"
+                }
+            },
+            mounted:function(){     //在构造器也能创建生命周期
+                console.log("创建挂载！！！");
+            },
+            destroyed:function(){
+                console.log("卸载了！！！！");
+            },
+            updated:function(){
+                console.log("更新了！！！");
+            },
+        });
+        //进行挂载到 div =app
+        var vm = new han().$mount("#app");
+        function destroy(){
+            vm.$destroy(); //卸载销毁
+        };
+        function reload(){
+            vm.$forceUpdate();  //更新
+        };
+        function tick(){
+            vm.msg="我是修改后的数据";
+            vm.$nextTick(function(){
+                console.log('数据修改完成');
+            });
+        };  
+    </script> 
+</body>
+```
+实例事件
+```
+$on事件 
+$once事件 只调用一次
+$off事件 关闭事件
+<body>
+    <h1>实例事件</h1>
+    <hr>
+    <div id="app">
+        {{num}}
+        <br>
+        <button @click="add()">++++</button>
+    </div>
+    <button onclick="reduce()">----</button>
+    <br>
+    <button onclick="onceEvent()">只减一次</button>
+    <br>
+    <button onclick="off()">关闭事件</button>
+    <script type="text/javascript">
+        var app=new Vue({
+            el:'#app',
+            data:{
+                num:10
+            },
+            methods:{
+                add:function(){
+                    this.num++;
+                },
+            }
+        });
+        app.$on("reduce",function(){
+            console.log("执行了 reduce 方法");
+            this.num--;
+        });
+        app.$once("onceEvent",function(){
+            console.log("执行了 onceEvent 方法");
+            this.num--;
+        });
+        function reduce(){
+            app.$emit('reduce');    //$emit外部调用
+        };
+        function onceEvent(){
+            app.$emit('onceEvent'); //$emit外部调用
+        }
+        function off(){
+            app.$off('reduce');     //关闭 reduce事件
+        }
+    </script>
+</body>
+```
 
 
 

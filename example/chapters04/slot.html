@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>slot</title>
+</head>
+<body>
+    <h1>slot</h1>
+    <hr>
+    <div id="app">
+        <hanxx> 
+            <span slot="name">{{hanxxData.name}}</span>
+            <span slot="age">{{hanxxData.age}}</span>
+            <span slot="sex">{{hanxxData.sex}}</span>
+            <span slot="skill">{{hanxxData.skill}}</span>
+        </hanxx>
+    </div>
+
+    <template id="tep">
+        <div>
+                <p>姓名：<slot name="name"></slot></p>
+                <p>年龄：<slot name="age"></slot></slot></p>
+                <p>性别：<slot name="sex"></slot></slot></p>
+                <p>职业：<slot name="skill"></slot></slot></p>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        var hanxx={
+            template:"#tep"
+        };
+        var app=new Vue({
+            el:'#app',
+            data:{
+                hanxxData:{
+                    name:"韩小星星",
+                    age:27,
+                    sex:"男",
+                    skill:"IT"
+                },
+            },
+            components:{
+                "hanxx":hanxx,
+            }
+        })
+    </script>
+    
+</body>
+</html>
