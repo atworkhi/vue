@@ -52,11 +52,11 @@ npm install vue-router --save
           component: Hi
         },
         {
-          path: '/hi1',
+          path: '/hi/hi1',
           component: Hi1
         },
         {
-          path: '/hi2',
+          path: '/hi/hi2',
           component: Hi2
         }
       ]
