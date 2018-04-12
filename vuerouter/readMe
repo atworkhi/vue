@@ -1,0 +1,131 @@
+vue init webpack vueName
+
+一丶单页面多路由区域操作
+1.给router起名字：
+<router-view name="left"></router-view>
+<router-view name="right"></router-view>
+2.在components创建需要页面
+3.配置路由 注意：多个的时候记得加s
+ components: {
+        default: HelloWorld,
+        left: hello,
+        right: world
+      }
+
+二丶利用URL传递参数
+1.定义路由的参数名:
+    {
+      path: '/params/:userId/:username/:usersex',
+      name: 'params',
+      component: Params
+    }
+2.传入参数 路由后都是参数
+<router-link to="/params/888/韩小星星/男">URL传参</router-link>
+3.用插值的形式接收参数
+    用户ID:{{$route.params.userId}}
+    <br>
+    姓名:{{$route.params.username}}
+    <br>
+    密码:{{$route.params.usersex}}
+4.用正则验证 在路由参数后用()  在括号内写入正则
+ path: '/params/:userId(\\d+)/:username/:usersex',
+
+三丶重定向问题 redirect：
+1.配置路由：
+    { 
+      path: '/back',
+      name: 'back',
+      redirect: '/'
+    }
+2.重定向到带参数的页面
+参数链接
+ <router-link to="/params/1111/我是参数/妹子">带参数的重定向</router-link>
+ 路由设置
+    {
+      path: '/params/:userId(\\d+)/:username/:usersex',
+      name: 'backparams',
+      redirect: '/params/:userId(\\d+)/:username/:usersex'
+    }
+
+四丶alias别名的使用 注意不能为\目录使用别名
+1.路由设置
+    {
+      path: '/alias',
+      name: 'alias',
+      component: alias,
+      alias: '/othername'
+    }
+2.引用
+    <router-link to="/alias">原始名称</router-link>|
+    <router-link to="/othername">别名的使用</router-link>|
+
+五丶路由过渡动画
+1.在<router-view></router-view>标签外层加入transition
+mode 有两种 “out-in”/"in-out"
+    <transition name="fade" mode="out-in">
+        <router-view></router-view>
+    </transition>
+2. 定义name的style
+  .fade-enter{
+    opacity: 0;
+  }
+  .fade-enter-active{
+    transition: opacity 1s;
+  }
+  .fade-leave{
+    opacity: 1;
+  }
+  .fade-leave-active{
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+六丶mode作用和404处理
+1.在路由中增加mode:
+    mode: 'history' :去掉地址栏中默认的"#"
+    mode: 'hash' :在地址栏末尾增加一个"#"
+2.404页面：
+    路由配置
+    {
+      path: '*',
+      component: error
+    }
+    制作404页面 ：error.vue
+
+七丶路由中的钩子函数
+    声明周期：进入路由-离开路由
+    两种配置：
+    1.在路由中配置钩子函数
+     {
+      path: '/params/:userId(\\d+)/:username/:usersex',
+      name: 'params',
+      component: Params,
+      beforeEnter: (to, from, next) => {
+        console.log(to)
+        console.log(from)
+        next()
+      }
+    2.在模版中配置：
+     beforeRouteEnter: (to, from, next) => {
+        console.log("准备进入params路由");
+        next();
+    },
+    beforeRouteLeave: (to, from, next) => {
+        console.log("离开params路由");
+        next();
+  }
+
+八丶编程导航
+1.访问地址上一步 下一步 实现上一步下一步的两个函数
+methods: {  
+    back () {
+      this.$router.go(-1)
+    },
+    gogo () {
+      this.$router.go(1)
+    }
+  }
+2.跳转到指定的路由：
+    点击函数名 () {
+      this.$router.push('路由')
+    }
