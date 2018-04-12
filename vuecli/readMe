@@ -1,0 +1,67 @@
+Vue CLi 脚手架配置
+1.Vuecli需要安装
+npm install vue-cli -g
+
+2.初始化
+vue init webpack vuecliName
+
+3.安装 package.json 中的包
+npm install
+
+4.运行
+cd  vuecliName
+npm run dev
+
+--------------------------------
+npm run build   对项目进行上线打包
+---------------------------------
+
+
+Vue CLi 的路由
+
+1.安装vue-router
+进入项目目录
+npm install vue-router --save
+
+2.在components增加自己的路由页面
+
+3.配置路由
+在router中
+ 引入页面components增加的页面
+ export default new Router数组中增加路由配置(注意空格)
+ {
+      path: '/hi',
+      name: 'Hi',
+      component: Hi
+    }
+4.配置导航页面
+配置导航
+<router-link to="/hi">自定义页面</router-link>
+
+5.配置子路由
+1.在父类模版中创建 <router-view></router-view>>
+2.创建子页面 在components下
+3.配置子页面的路由：
+{
+      path: '/hi',
+      name: 'Hi',
+      component: Hi,
+      children: [
+        {
+          path: '/',
+          component: Hi
+        },
+        {
+          path: '/hi1',
+          component: Hi1
+        },
+        {
+          path: '/hi2',
+          component: Hi2
+        }
+      ]
+    }
+并引入Hi1与Hi2
+
+
+
