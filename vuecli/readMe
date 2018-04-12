@@ -38,10 +38,10 @@ npm install vue-router --save
 配置导航
 <router-link to="/hi">自定义页面</router-link>
 
-5.配置子路由
-1.在父类模版中创建 <router-view></router-view>>
-2.创建子页面 在components下
-3.配置子页面的路由：
+配置子路由：
+a.在父类模版中创建 <router-view></router-view>>
+b.创建子页面 在components下
+c.配置子页面的路由：
 {
       path: '/hi',
       name: 'Hi',
@@ -62,6 +62,11 @@ npm install vue-router --save
       ]
     }
 并引入Hi1与Hi2
+
+传值：
+1.获取路由的name  ${{route.name}}
+2.通过router传值：
+<router-link :to="{name:'Hi/hi1',params:{key:value,key:value}}"></router-link>
 
 
 

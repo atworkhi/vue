@@ -2,6 +2,8 @@
   <div class="hi">
     <h1>{{ msg }}</h1>
     <h2>韩小星星1</h2>
+    <h3>{{$route.params.username}}</h3>
+    <h3>{{$route.params.id}}</h3>
   </div>
 </template>
 
