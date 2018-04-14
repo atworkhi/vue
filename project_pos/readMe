@@ -1,0 +1,203 @@
+商品收银界面实战
+
+1.用vuecli脚手架工具初始化项目
+vue init webpack pos
+
+2.初始化：
+2.1 新建模版 components/pos.vue
+2.2 路由设置：router/index.js 主页指向 pos.vue
+2.3 全局参数 index.html:
+<title>智能收银系统</title>
+    <style>
+      html,body,#app{
+        height: 100%;
+        padding: 0px;
+        margin: 0px;
+      }
+</style>
+2.4删除vue图标 src/App.vue 删除img
+
+3.图标：iconfont.cn
+阿里图标库：iconfont.cn
+选择图标 -->添加到项目-FontClass->生成代码->复制地址
+引入到index.html 
+ <link rel="stylesheet" href="http://at.alicdn.com/t/font_628810_sp1fncp2gwrk9.css">
+引用图标 vue文件中：
+div中：<i class="icon iconfont 图标名"></i>
+注意：如果添加新图标，需要更新代码：
+
+4.侧边栏的制作：
+4.1.在 components 下新建 文件夹 page-放置页面，common-通用的工具栏
+4.2.把Pos.vue移动到page,并更改路由
+4.3.在common创建通用工具栏 leftNav.vue
+4.4.公共侧边栏放入app.vue  
+    import leftNav from '@/components/common/leftNav'
+    export default {
+    name: 'App',
+    components: {
+        leftNav
+    }
+    }
+    有标签引入  <leftNav></leftNav>
+
+5.element 饿了么组件库
+    安装：npm install element-ui --save
+    main.js 中引入  import ele from 'element-ui'
+                    import 'element-ui/lib/theme-chalk/index.css'
+                    Vue.use(ele)
+    使用：在Pos.vue中使用 网格布局
+        <el-row><el-col :span='7'></el-col>  <el-col></el-col></el-row>
+    
+    el-tabs标签：
+    <el-tabs>
+          <el-tab-pane label="点餐">
+            
+          </el-tab-pane>
+          <el-tab-pane label="挂单">
+            挂单
+          </el-tab-pane>
+          <el-tab-pane label="外卖">
+            外卖
+          </el-tab-pane>
+        </el-tabs>
+    <el-table>标签：
+ <el-table :data="tableData" stripe border  height="250" style="100%">
+              <el-table-column prop="goodsName" label="商品名称"></el-table-column>
+              <el-table-column prop="count" label="数量" width='50'></el-table-column>
+              <el-table-column prop="price" label="金额" width='70'></el-table-column>
+              <el-table-column label="操作" width='100' fixed='right'>
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small">增加</el-button>
+                  </template>
+</el-table-column>
+初始化：tableData
+// 初始化参数
+  data () {
+    return {
+      tableData: [
+        {goodsName: '可口可乐', count: 2, price: 10},
+        {goodsName: '三明治', count: 1, price: 15},
+        {goodsName: '薯条', count: 1, price: 8}
+      ]
+    }
+  },
+el-button组件：
+
+ <div class="option">
+              <el-button type="success">结账</el-button>
+              <el-button type="info">挂单</el-button>
+              <el-button type="warning">外卖</el-button>
+              <el-button type="danger">删除</el-button>
+</div>
+
+6.Axios从远程读取数据
+ 安装：npm install axios --save
+ 
+ 引入：哪个文件使用哪个文件引入
+ import ax from 'axios'
+
+ 声明周期：创建的时候引用:
+ // 引用axios 在创建的时候引用
+  created: function () {
+    // get获取 json值
+    ax.get(url).then(reponse => {
+      console.log(reponse)
+      this.数据名=reponse.data
+    }).catch(error => {
+      异常处理
+      console.log(error))
+  },
+
+  7.订单模块
+    methods: {
+    // 点击添加商品
+    addOrderList (goods) {
+      // 判断订单是否存在商品 存在则+1 不存在则新建
+      let isHave = false
+      for (let i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].goodsId === goods.goodsId) {
+          isHave = true
+        }
+      }
+      if (isHave) {
+        // 改变购物车中的数量
+        let arr = this.tableData.filter(o => o.goodsId === goods.goodsId)
+        arr[0].count++
+      } else {
+        // 新商品
+        let newGoods = {goodsId: goods.goodsId, goodsName: goods.goodsNamep, price: goods.price, count: 1}
+        // 新商品放入
+        this.tableData.push(newGoods)
+      }
+    }
+  }
+  
+调用：
+li中绑定 @click="addOrderList(goods)"
+
+计算购物车中的所有物品的金额和数量：
+this.tableData.forEach(element => {
+        this.totalCount += element.count
+        this.totalMoney += element.price
+      })
+增加单个商品：
+scope.row把者一行传进去
+<el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
+
+删除单个商品：
+// 删除单个商品
+    deleteGoods (goods) {
+      this.tableData = this.tableData.filter(o => o.goodsId !== goods.goodsId)
+      // 金额和总数量的从新计算
+      this.resultMoney()
+    },
+ // 金额与总数
+    resultMoney () {
+      this.totalCount = 0
+      this.totalMoney = 0
+      if (this.tableData) {
+        this.tableData.forEach(element => {
+          this.totalCount += element.count
+          this.totalMoney += element.price
+        })
+      }
+    }
+
+删除全部商品：
+ delAllGoods () {
+      // 清零商品列表 总数 与金钱
+      this.tableData = []
+      this.totalCount = 0
+      this.totalMoney = 0
+    },
+
+结账：
+// 结账
+    checkout () {
+      // 判断是否有商品
+      if (this.totalCount !== 0) {
+        // 清零商品列表 总数 与金钱
+        this.tableData = []
+        this.totalCount = 0
+        this.totalMoney = 0
+        this.$message({
+          message: '结账成功!谢谢光临！',
+          type: 'success'
+        })
+      } else {
+        this.$message({
+          message: '不要点我啊！！',
+          type: 'warning'
+        })
+      }
+    },
+
+//打包上线 
+修改打包目录打包的文件名
+config/index.js
+assetsPublicPath: '/', 改为   assetsPublicPath: './',
+assetsPublicPath: '/',
+打包：npm run build
+
+
